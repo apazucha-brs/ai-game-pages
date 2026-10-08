@@ -1,5 +1,33 @@
 {
   "version": 1,
-  "players": {},
-  "lastResults": {}
+  "players": {
+    "apazucha-brs": {
+      "login": "apazucha-brs",
+      "team": "Backend",
+      "xp": 100,
+      "solved": {
+        "m1": {
+          "at": "2026-10-08T14:05:42.530Z",
+          "xp": 100,
+          "hints": 0,
+          "issue": 1
+        }
+      },
+      "badges": [
+        "first",
+        "clean"
+      ],
+      "createdAt": "2026-10-08T14:05:42.530Z",
+      "updatedAt": "2026-10-08T14:05:42.530Z"
+    }
+  },
+  "lastResults": {
+    "apazucha-brs": {
+      "m1": {
+        "status": "correct",
+        "at": "2026-10-08T14:05:42.530Z",
+        "issue": 1
+      }
+    }
+  }
 }

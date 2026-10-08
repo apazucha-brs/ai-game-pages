@@ -1,6 +1,25 @@
 {
   "version": 2,
-  "byLogin": {},
-  "processed": {},
-  "nonces": {}
+  "byLogin": {
+    "apazucha-brs": [
+      {
+        "at": "2026-10-08T14:05:42.530Z",
+        "mission": "m1",
+        "status": "correct",
+        "issue": 1
+      }
+    ]
+  },
+  "processed": {
+    "1": {
+      "status": "correct",
+      "at": "2026-10-08T14:05:42.530Z",
+      "login": "apazucha-brs"
+    }
+  },
+  "nonces": {
+    "apazucha-brs": {
+      "7f1882d3ff468afe80d3438cb156e36e": "2026-10-08T14:05:22.366Z"
+    }
+  }
 }

@@ -1,9 +1,40 @@
 {
   "version": 1,
-  "generatedAt": null,
-  "totalPlayers": 0,
+  "generatedAt": "2026-10-08T14:05:42.576Z",
+  "totalPlayers": 1,
   "maxXp": 1850,
-  "players": [],
-  "teams": [],
-  "lastResults": {}
+  "players": [
+    {
+      "login": "apazucha-brs",
+      "team": "Backend",
+      "xp": 100,
+      "level": 1,
+      "solved": {
+        "m1": true
+      },
+      "badges": [
+        "first",
+        "clean"
+      ],
+      "updatedAt": "2026-10-08T14:05:42.530Z"
+    }
+  ],
+  "teams": [
+    {
+      "team": "Backend",
+      "xp": 100,
+      "players": 1,
+      "solved": 1,
+      "avgXp": 100
+    }
+  ],
+  "lastResults": {
+    "apazucha-brs": {
+      "m1": {
+        "status": "correct",
+        "at": "2026-10-08T14:05:42.530Z",
+        "issue": 1
+      }
+    }
+  }
 }
