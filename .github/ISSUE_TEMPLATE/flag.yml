@@ -1,0 +1,52 @@
+name: "Flag submission (Agent Academy)"
+description: "Sent automatically by the Submit button on the Agent Academy site. Don't type your answer here!"
+title: "[flag] "
+labels: ["flag"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **The Agent Academy site fills in this issue for you.** Just click **Create / Submit new issue** at the bottom.
+
+        - Your answer is **encrypted** in this issue with a public key. Only the GitHub Action can read it.
+        - The GitHub Action checks it in about 1–2 minutes, comments and closes the issue. You'll also see the result on the site.
+        - Don't change the fields by hand: if the visible fields don't match the encrypted content, the submission is rejected.
+          Don't edit the issue after you create it. While it waits in the queue, the Action checks its current content.
+  - type: input
+    id: mission
+    attributes:
+      label: "Mission"
+      description: "Mission ID: m1 … m8."
+      placeholder: "m1"
+    validations:
+      required: true
+  - type: input
+    id: sealed
+    attributes:
+      label: "Encrypted submission (do not edit)"
+      description: "Answer, mission, hints and login, encrypted by the site (RSA-OAEP). Someone else's submission won't work: the Action checks that the login inside is the issue author."
+      placeholder: "filled in by the Agent Academy site"
+    validations:
+      required: true
+  - type: input
+    id: hints
+    attributes:
+      label: "Hints revealed"
+      description: "0, 1 or 2. Honor system: each hint revealed before solving costs 20 XP."
+      placeholder: "0"
+    validations:
+      required: true
+  - type: input
+    id: team
+    attributes:
+      label: "Team"
+      description: "Team name exactly as shown on the site."
+    validations:
+      required: true
+  - type: input
+    id: login
+    attributes:
+      label: "GitHub login typed on the site"
+      description: "For cross-checking only: if it doesn't match your account, the Action asks you to fix the login on the site."
+    validations:
+      required: false

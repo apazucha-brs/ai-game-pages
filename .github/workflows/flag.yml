@@ -1,0 +1,85 @@
+# Checks flag submissions (issues labeled "flag" or titled "[flag] …"), updates the leaderboard
+# and publishes the site. Security note: issue data is NEVER interpolated with ${{ }} into "run:".
+# The script reads it from the event file (GITHUB_EVENT_PATH) and from the REST API.
+name: Verify flags
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch: {}   # manual sweep of open flag issues (e.g. after changing a secret)
+
+# Zero permissions by default; each job gets only what it needs.
+permissions: {}
+
+jobs:
+  verify:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.issue.user.type != 'Bot' &&
+       (contains(github.event.issue.labels.*.name, 'flag') || startsWith(github.event.issue.title, '[flag]')))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write   # commit state/ + site/data/leaderboard.json
+      issues: write     # comment, close, lock, list open flag issues
+    # One verification at a time. The group is set on the JOB (not the workflow): a run for a regular issue
+    # (job skipped by "if") doesn't take a queue slot and doesn't cancel a pending flag verification.
+    # GitHub keeps only ONE pending job per group in the queue, so on every run the script also
+    # checks all other open flag issues.
+    concurrency:
+      group: leaderboard
+      cancel-in-progress: false
+    outputs:
+      changed: ${{ steps.verify.outputs.changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+
+      - name: Node 22
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+
+      - name: Verify flags and update the leaderboard
+        id: verify
+        env:
+          ANSWERS: ${{ secrets.ANSWERS }}
+          # private key that decrypts submissions (scripts/gen-keys.mjs); _OLD only during key rotation
+          SUBMIT_PRIVATE_KEY: ${{ secrets.SUBMIT_PRIVATE_KEY }}
+          SUBMIT_PRIVATE_KEY_OLD: ${{ secrets.SUBMIT_PRIVATE_KEY_OLD }}
+          GITHUB_TOKEN: ${{ github.token }}
+          BRANCH: main
+        run: node .github/scripts/verify-flag.mjs
+
+  deploy:
+    needs: verify
+    if: needs.verify.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    # A push made with GITHUB_TOKEN does not trigger other workflows, so we publish here.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout (latest main with results)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Upload site/
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

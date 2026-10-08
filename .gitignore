@@ -1,0 +1,12 @@
+# real answers: NEVER commit
+answers.local.json
+node_modules/
+.DS_Store
+*.log
+.tmp/
+# copies of results from before a reset (contain player logins): keep local
+archive/
+# private keys that decrypt submissions (scripts/gen-keys.mjs): NEVER commit
+keys.local.pem
+keys.old.local.pem
+*.pem

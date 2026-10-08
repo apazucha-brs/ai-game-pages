@@ -1,0 +1,3 @@
+# Regular issues (questions for the trainer, bugs in missions) are still allowed.
+# The flag.yml workflow only reacts to issues labeled "flag" or with a title starting with "[flag]".
+blank_issues_enabled: true

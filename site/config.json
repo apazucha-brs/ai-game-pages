@@ -1,0 +1,30 @@
+{
+  "owner": "YOUR-ORG",
+  "repo": "agent-academy",
+  "branch": "main",
+  "submitKey": null,
+  "trainingRepoUrl": "",
+  "eventName": "",
+  "teams": ["Backend", "Frontend", "Platform", "QA", "Data", "Other"],
+  "hintCost": 20,
+  "maxHints": 2,
+  "pollSeconds": 30,
+  "limits": { "wrongPerMissionPerDay": 5, "issuesPerDay": 30 },
+  "missions": [
+    { "id": "m1", "act": 1, "xp": 100 },
+    { "id": "m2", "act": 1, "xp": 150 },
+    { "id": "m3", "act": 1, "xp": 150 },
+    { "id": "m4", "act": 2, "xp": 250 },
+    { "id": "m5", "act": 2, "xp": 200 },
+    { "id": "m6", "act": 3, "xp": 250 },
+    { "id": "m7", "act": 3, "xp": 250 },
+    { "id": "m8", "act": 3, "xp": 500 }
+  ],
+  "levels": [
+    { "at": 0, "name": "Prompt Intern", "desc": "First steps in the terminal with an agent." },
+    { "at": 300, "name": "Agent Pilot", "desc": "You steer the agent with a steady hand: test, diagnose, fix." },
+    { "at": 700, "name": "Context Architect", "desc": "You plan before the agent touches code, and you don't fall for tricks." },
+    { "at": 1200, "name": "Incident Slayer", "desc": "Logs, SQL and charts hold no secrets from you." },
+    { "at": 1800, "name": "Academy Legend", "desc": "A full clear with almost no hints. Respect." }
+  ]
+}
