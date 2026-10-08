@@ -1,30 +1,96 @@
 {
-  "owner": "YOUR-ORG",
-  "repo": "agent-academy",
+  "owner": "apazucha-brs",
+  "repo": "ai-game-pages",
   "branch": "main",
-  "submitKey": null,
-  "trainingRepoUrl": "",
-  "eventName": "",
-  "teams": ["Backend", "Frontend", "Platform", "QA", "Data", "Other"],
+  "submitKey": {
+    "kid": "2c5a9d11b730ee35",
+    "alg": "RSA-OAEP-256",
+    "spki": "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEA0MRTrnPGq4f2+NJVS1tX2ww4ItJB48dJQAtWmjfPXDwc3uCz6HYI00Eu7shjwROlg9HfiMMk4PkB8OJrDfjrv/ZqZ/kkdvB1DHch3CjzNeLzzaeLuNrBQHghzmwUQ/jY0TKVGctB5TPfNLb9xTJoJKWlAcOpbwXqbb3C+gT6eZ+INO59pf/R55y5n4GRkoYXq596zy/7a0y52u1lq5A6NDHcBBt5dcPkgOA1TWnFB0Nv++zowyAKwJMY5mG1CLUmkGjpWGd1G83aNsJjDfeS7Yt5ba2HZvZgb3REKWFq7jtBcGP5gsQj8z1azxYx4ANI5bFxYCWKKKBWewlMcymP/u3ER8b74qVt9uO4Ew8ZZmHpV5Chv25JNBYUP++DmADq0uXsr1lseuKUj0xNK5EAyXoTm/0FJsUSa34k0MwQfB+mMuNpfVe3DEzAqSuFH5qTOWgAtrrAfvmqazBmFVg4YsBPe/ya2JtT3fsfUAJ48yP5VaJPEitcGHk7rj/g8dCRAgMBAAE="
+  },
+  "trainingRepoUrl": "https://github.com/apazucha-brs/shopflow-training",
+  "eventName": "Preview",
+  "teams": [
+    "Backend",
+    "Frontend",
+    "Platform",
+    "QA",
+    "Data",
+    "Other"
+  ],
   "hintCost": 20,
   "maxHints": 2,
   "pollSeconds": 30,
-  "limits": { "wrongPerMissionPerDay": 5, "issuesPerDay": 30 },
+  "limits": {
+    "wrongPerMissionPerDay": 5,
+    "issuesPerDay": 30
+  },
   "missions": [
-    { "id": "m1", "act": 1, "xp": 100 },
-    { "id": "m2", "act": 1, "xp": 150 },
-    { "id": "m3", "act": 1, "xp": 150 },
-    { "id": "m4", "act": 2, "xp": 250 },
-    { "id": "m5", "act": 2, "xp": 200 },
-    { "id": "m6", "act": 3, "xp": 250 },
-    { "id": "m7", "act": 3, "xp": 250 },
-    { "id": "m8", "act": 3, "xp": 500 }
+    {
+      "id": "m1",
+      "act": 1,
+      "xp": 100
+    },
+    {
+      "id": "m2",
+      "act": 1,
+      "xp": 150
+    },
+    {
+      "id": "m3",
+      "act": 1,
+      "xp": 150
+    },
+    {
+      "id": "m4",
+      "act": 2,
+      "xp": 250
+    },
+    {
+      "id": "m5",
+      "act": 2,
+      "xp": 200
+    },
+    {
+      "id": "m6",
+      "act": 3,
+      "xp": 250
+    },
+    {
+      "id": "m7",
+      "act": 3,
+      "xp": 250
+    },
+    {
+      "id": "m8",
+      "act": 3,
+      "xp": 500
+    }
   ],
   "levels": [
-    { "at": 0, "name": "Prompt Intern", "desc": "First steps in the terminal with an agent." },
-    { "at": 300, "name": "Agent Pilot", "desc": "You steer the agent with a steady hand: test, diagnose, fix." },
-    { "at": 700, "name": "Context Architect", "desc": "You plan before the agent touches code, and you don't fall for tricks." },
-    { "at": 1200, "name": "Incident Slayer", "desc": "Logs, SQL and charts hold no secrets from you." },
-    { "at": 1800, "name": "Academy Legend", "desc": "A full clear with almost no hints. Respect." }
+    {
+      "at": 0,
+      "name": "Prompt Intern",
+      "desc": "First steps in the terminal with an agent."
+    },
+    {
+      "at": 300,
+      "name": "Agent Pilot",
+      "desc": "You steer the agent with a steady hand: test, diagnose, fix."
+    },
+    {
+      "at": 700,
+      "name": "Context Architect",
+      "desc": "You plan before the agent touches code, and you don't fall for tricks."
+    },
+    {
+      "at": 1200,
+      "name": "Incident Slayer",
+      "desc": "Logs, SQL and charts hold no secrets from you."
+    },
+    {
+      "at": 1800,
+      "name": "Academy Legend",
+      "desc": "A full clear with almost no hints. Respect."
+    }
   ]
 }
