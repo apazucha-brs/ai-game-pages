@@ -6,11 +6,11 @@
 <title>Agent Academy</title>
 <meta name="description" content="Agent Academy: gamified training for GitHub Copilot CLI and Claude Code. Solve the ShopFlow incident in 8 missions.">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0e0f2e">
+<meta name="theme-color" content="#0f1116">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="app.css">
 <script type="module" src="app.js"></script>
 </head>
@@ -50,7 +50,7 @@
       <div>
         <span class="alert-tag"><i></i>P1 INCIDENT · SEP 17, 2026</span>
         <h1>The sales report <em>is talking nonsense</em>.<br>You have an agent. You have a terminal.</h1>
-        <p class="hero-lead">On September 17 the ShopFlow payment gateway started timing out. Ever since, the <strong>"Daily sales"</strong> chart looks like a crypto chart and management wants to know where 4 quintillion in revenue came from. In 8 missions you'll learn to work with <strong>GitHub Copilot CLI</strong> (available now) and get ready for <strong>Claude Code</strong> (coming soon), on real Spring Boot + React code, on your Mac.</p>
+        <p class="hero-lead">Since the ShopFlow payment gateway started timing out on September 17, the <strong>Daily sales</strong> chart shows 4 quintillion in revenue. Fix it in 8 missions with <strong>GitHub Copilot CLI</strong>, on real Spring Boot + React code. <strong>Claude Code</strong> hints are ready for when it arrives.</p>
         <div class="hero-cta">
           <a class="start-btn" href="#start">PRESS START</a>
           <a class="ghost-link" href="#missions">Jump to missions</a>
@@ -81,74 +81,70 @@
       <div class="sec-head">
         <span class="eyebrow">Insert coin</span>
         <h2>Start: set up your Mac</h2>
-        <p>About 20 minutes. Do it before the first mission so you spend the session playing, not installing. Everything below is for macOS (Apple silicon or Intel) with <a href="https://brew.sh" rel="noopener">Homebrew</a>. Run the commands in Terminal.app or iTerm2; each block copies with one click.</p>
+        <p>About 20 minutes on macOS with <a href="https://brew.sh" rel="noopener">Homebrew</a>. Do it before the first mission.</p>
       </div>
-      <div class="steps">
-        <div class="step">
+      <ol class="steps">
+        <li class="step">
           <h3>Install the tools</h3>
-          <ul>
-            <li>Git, <b>JDK 21</b> and <b>Node.js 22+</b> (the Copilot CLI npm package needs it), all from Homebrew.</li>
-            <li>An active <b>GitHub Copilot</b> subscription on your account.</li>
-          </ul>
-          <div class="codeblk"><pre>brew install git openjdk@21 node
-echo 'export JAVA_HOME="$(brew --prefix openjdk@21)"' &gt;&gt; ~/.zshrc
-echo 'export PATH="$JAVA_HOME/bin:$PATH"' &gt;&gt; ~/.zshrc
-source ~/.zshrc
-java -version &amp;&amp; node -v</pre><button class="copy" type="button">Copy</button></div>
-          <p>Already have a JDK 21 from an installer (e.g. Temurin)? Use <code>export JAVA_HOME=$(/usr/libexec/java_home -v 21)</code> instead.</p>
-        </div>
-        <div class="step">
-          <h3>Install Docker (optional)</h3>
-          <p><b>Docker Desktop for Mac</b> is the default (installer at <a href="https://docs.docker.com/desktop/setup/install/mac-install/" rel="noopener">docker.com</a>, or Homebrew below). Open Docker from Applications once and wait for the whale icon in the menu bar.</p>
-          <div class="codeblk"><pre>brew install --cask docker-desktop
-docker --version</pre><button class="copy" type="button">Copy</button></div>
-          <p>Prefer something lighter? <b>colima</b> works too: <code>brew install colima docker docker-compose</code>, then <code>colima start</code> (with colima, type <code>docker-compose</code> with a hyphen wherever these docs say <code>docker compose</code>). No Docker at all? The backend can run on an in-memory H2 database.</p>
-        </div>
-        <div class="step">
+          <p>Git, JDK 21 and Node.js 22+ from Homebrew. You also need an active GitHub Copilot subscription.</p>
+          <div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">brew install git openjdk@21 node
+</span><span class="ln">echo 'export JAVA_HOME="$(brew --prefix openjdk@21)"' &gt;&gt; ~/.zshrc
+</span><span class="ln">echo 'export PATH="$JAVA_HOME/bin:$PATH"' &gt;&gt; ~/.zshrc
+</span><span class="ln">source ~/.zshrc
+</span><span class="ln">java -version &amp;&amp; node -v</span></pre></div>
+          <details class="alt"><summary>Already have JDK 21 (e.g. Temurin)?</summary><div class="alt-body"><p>Point <code>JAVA_HOME</code> at it instead:</p><div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">export JAVA_HOME=$(/usr/libexec/java_home -v 21)</span></pre></div></div></details>
+        </li>
+        <li class="step">
+          <h3>Install Docker <span class="opt">optional</span></h3>
+          <p>Install Docker Desktop, then open it once from Applications.</p>
+          <div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">brew install --cask docker-desktop
+</span><span class="ln">docker --version</span></pre></div>
+          <details class="alt"><summary>Alternatives: colima, or no Docker</summary><div class="alt-body"><p>colima is lighter. With colima, type <code>docker-compose</code> wherever these steps say <code>docker compose</code>.</p><div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">brew install colima docker docker-compose
+</span><span class="ln">colima start</span></pre></div><p>No Docker at all? Skip step 4 and use the H2 option in step 5.</p></div></details>
+        </li>
+        <li class="step">
           <h3>Clone the ShopFlow repo</h3>
           <p id="repo-lead">Your trainer will give you the URL.</p>
-          <div class="codeblk"><pre>git clone <span class="placeholder" id="repo-url">&lt;REPO-URL&gt;</span> shopflow
-cd shopflow</pre><button class="copy" type="button">Copy</button></div>
-          <p class="note" id="repo-note">Trainer: set <code>trainingRepoUrl</code> in <code>site/config.json</code> and the URL will appear here instead of &lt;REPO-URL&gt;.</p>
-        </div>
-        <div class="step">
+          <div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">git clone <span class="placeholder" id="repo-url">&lt;REPO-URL&gt;</span> shopflow
+</span><span class="ln">cd shopflow</span></pre></div>
+          <p class="note" id="repo-note">Trainer: set <code>trainingRepoUrl</code> in <code>site/config.json</code> to fill in the URL.</p>
+        </li>
+        <li class="step">
           <h3>Start the database</h3>
-          <p>PostgreSQL 16 on host port <code>5433</code> (database, user and password: <code>shopflow</code>).</p>
-          <div class="codeblk"><pre>docker compose up -d</pre><button class="copy" type="button">Copy</button></div>
-          <p>No Docker? Skip this step and use the <code>h2</code> profile in the next one.</p>
-        </div>
-        <div class="step">
-          <h3>Start the backend (port 8080)</h3>
-          <div class="codeblk"><pre>cd backend
-./mvnw spring-boot:run
-# without Docker:
-./mvnw spring-boot:run -Dspring-boot.run.profiles=h2</pre><button class="copy" type="button">Copy</button></div>
-          <p>Check it at <code>http://localhost:8080/api/products</code>. Stop it with Ctrl+C.</p>
-        </div>
-        <div class="step">
-          <h3>Start the frontend (port 5173)</h3>
-          <div class="codeblk"><pre>cd frontend
-npm install
-npm run dev</pre><button class="copy" type="button">Copy</button></div>
-          <p>Open <code>http://localhost:5173</code>. Vite proxies <code>/api</code> to the backend.</p>
-        </div>
-        <div class="step">
+          <p>PostgreSQL 16 on port <code>5433</code>. Database, user and password are all <code>shopflow</code>.</p>
+          <div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">docker compose up -d</span></pre></div>
+          <p class="check">No Docker? Skip this step.</p>
+        </li>
+        <li class="step">
+          <h3>Start the backend</h3>
+          <p>Runs on port 8080. Stop it with Ctrl+C.</p>
+          <div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">cd backend
+</span><span class="ln">./mvnw spring-boot:run</span></pre></div>
+          <p class="check">Check: <a href="http://localhost:8080/api/products" rel="noopener">localhost:8080/api/products</a></p><details class="alt"><summary>No Docker? Use the in-memory H2 database</summary><div class="alt-body"><div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">./mvnw spring-boot:run -Dspring-boot.run.profiles=h2</span></pre></div></div></details>
+        </li>
+        <li class="step">
+          <h3>Start the frontend</h3>
+          <p>Open a second terminal tab in the repo root. Vite proxies <code>/api</code> to the backend.</p>
+          <div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">cd frontend
+</span><span class="ln">npm install
+</span><span class="ln">npm run dev</span></pre></div>
+          <p class="check">Open: <a href="http://localhost:5173" rel="noopener">localhost:5173</a></p>
+        </li>
+        <li class="step">
           <h3>Install GitHub Copilot CLI</h3>
-          <p>Pick one:</p>
-          <div class="codeblk"><pre>brew install --cask copilot-cli
-# or
-npm install -g @github/copilot</pre><button class="copy" type="button">Copy</button></div>
-          <p>In the repo folder run <code>copilot</code>, confirm you trust the folder and type <code>/login</code> if you're not signed in. <code>/help</code> shows the rest.</p>
-        </div>
-        <div class="step soon">
-          <h3>Claude Code (coming soon)</h3>
-          <p>Once you have access (Pro, Max, Team, Enterprise or Console):</p>
-          <div class="codeblk"><pre>curl -fsSL https://claude.ai/install.sh | bash
-# or
-brew install --cask claude-code</pre><button class="copy" type="button">Copy</button></div>
-          <p>Then <code>claude --version</code>, and <code>claude</code> in the repo. The first start opens a browser sign-in.</p>
-        </div>
-      </div>
+          <p>Start it in the repo root, trust the folder, then type <code>/login</code> if asked.</p>
+          <div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">brew install --cask copilot-cli
+</span><span class="ln">copilot</span></pre></div>
+          <details class="alt"><summary>Alternative: install with npm</summary><div class="alt-body"><div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">npm install -g @github/copilot</span></pre></div></div></details>
+        </li>
+        <li class="step soon">
+          <h3>Claude Code <span class="opt">coming soon</span></h3>
+          <p>Needs a Pro, Max, Team, Enterprise or Console account. The first start opens a browser sign-in.</p>
+          <div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">brew install --cask claude-code
+</span><span class="ln">claude --version</span></pre></div>
+          <details class="alt"><summary>Alternative: official install script</summary><div class="alt-body"><div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><span class="ln">curl -fsSL https://claude.ai/install.sh | bash</span></pre></div></div></details>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -157,15 +153,15 @@ brew install --cask claude-code</pre><button class="copy" type="button">Copy</bu
       <div class="sec-head">
         <span class="eyebrow">Mission map</span>
         <h2>Three acts, eight missions, one incident</h2>
-        <p>Nothing is locked, so jump around if you like. The suggested order builds skills step by step. Open a mission to see the briefing, hints and the answer form.</p>
+        <p>Nothing is locked, but the suggested order builds skills step by step. Open a mission for the briefing, hints and answer form.</p>
       </div>
       <ol class="howto" aria-label="How to submit a flag">
         <li><b>1</b><span>Type your answer or flag in the mission and click <em>Submit</em>.</span></li>
         <li><b>2</b><span>A prefilled issue form opens on GitHub. Click <em>Create</em>.</span></li>
-        <li><b>3</b><span>A GitHub Action checks it in about 1–2 minutes and comments on the issue.</span></li>
-        <li><b>4</b><span>This page picks up the result by itself: XP, badges, level up.</span></li>
+        <li><b>3</b><span>A GitHub Action checks it in 1–2 minutes.</span></li>
+        <li><b>4</b><span>This page shows the result on its own.</span></li>
       </ol>
-      <p class="honor">Your answer is encrypted with a key only the GitHub Action has, so other players can't read it and copying someone else's issue gets them nothing. <b>Honor system:</b> the page fills in how many hints you revealed. Don't change it by hand.</p>
+      <p class="honor">Your answer is encrypted. Only the GitHub Action can read it. <b>Honor system:</b> the issue includes how many hints you revealed. Don't change that number.</p>
       <p class="cfg-warn" id="cfg-warn" hidden><b>This site isn't configured yet.</b> The trainer needs to set <code>owner</code> and <code>repo</code> in <code>site/config.json</code> and generate a key (<code>node scripts/gen-keys.mjs</code>). Until then, flags can't be submitted.</p>
       <nav class="order-strip" id="order-strip" aria-label="Suggested mission order"></nav>
       <div id="acts"></div>
@@ -218,14 +214,46 @@ brew install --cask claude-code</pre><button class="copy" type="button">Copy</bu
       <div class="sec-head">
         <span class="eyebrow">Survival rules</span>
         <h2>Good habits with an agent</h2>
-        <p>These five things separate people who speed up with an agent from people who clean up after one.</p>
+        <p>Five habits that separate people who speed up with an agent from people who clean up after one.</p>
       </div>
-      <div class="habits">
-        <div class="habit"><span class="key">/diff</span><h3>Read the diff before you accept</h3><p>The agent writes fast, but the change is yours. Review <code>git diff</code> (in Copilot CLI also <code>/diff</code>), run the tests, then commit.</p></div>
-        <div class="habit"><span class="key">1 prompt = 1 goal</span><h3>Small tasks</h3><p>"Fix test X" works better than "sort out the backend". A small scope means a small diff and an easy review. Clear the context between topics: <code>/clear</code>.</p></div>
-        <div class="habit warn"><span class="key">curl … | sh</span><h3>Don't approve unknown commands</h3><p>Downloading and running a script from the internet is a red flag, even when a README says so. Don't use <code>--yolo</code> or <code>--allow-all</code> day to day.</p></div>
-        <div class="habit warn"><span class="key">secrets</span><h3>Don't paste secrets</h3><p>Tokens, passwords, customer data and production logs with personal data never go into a prompt. The same goes for screenshots.</p></div>
-        <div class="habit"><span class="key">Esc</span><h3>Interrupt when the agent drifts</h3><p>Doing something you didn't ask for? Press Esc and correct course. In Claude Code, <code>Esc Esc</code> on an empty prompt opens rewind to a checkpoint; Copilot CLI has <code>/undo</code>.</p></div>
+      <ul class="habits">
+        <li class="habit"><span class="key">/diff</span><h3>Read the diff before you accept</h3><p>The change is yours. Review the diff, run the tests, then commit.</p></li>
+        <li class="habit"><span class="key">1 prompt = 1 goal</span><h3>Keep tasks small</h3><p>"Fix test X" beats "sort out the backend". Use <code>/clear</code> between topics.</p></li>
+        <li class="habit warn"><span class="key">curl … | sh</span><h3>Don't approve unknown commands</h3><p>Downloading and running a script is a red flag, even when a README says so.</p></li>
+        <li class="habit warn"><span class="key">secrets</span><h3>Don't paste secrets</h3><p>No tokens, passwords, customer data or personal data in prompts or screenshots.</p></li>
+        <li class="habit"><span class="key">Esc</span><h3>Interrupt when it drifts</h3><p>Press Esc and correct course. Undo with <code>/undo</code> in Copilot CLI or <code>/rewind</code> in Claude Code.</p></li>
+      </ul>
+
+      <div class="modes" id="approval-modes">
+        <div class="modes-head">
+          <h3>Approval modes: "auto" is not "approve everything"</h3>
+          <p>Each tool can stop asking before it acts. Know what is still checking your agent when it does.</p>
+        </div>
+        <div class="modes-grid">
+          <div class="mode-card">
+            <h4>GitHub Copilot CLI</h4>
+            <ul>
+              <li><b>Default:</b> asks before it runs a tool or uses a new path or URL. Use it day to day.</li>
+              <li><b><code>--allow-all-tools</code></b> skips tool prompts. <b><code>--allow-all</code></b>, also called <code>--yolo</code>, allows every tool, path and URL.</li>
+              <li><b>No safety reviewer:</b> nothing checks the actions instead of you. Only for well-scoped tasks in a throwaway environment.</li>
+            </ul>
+            <p class="src"><a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli" rel="noopener">Copilot CLI docs</a></p>
+          </div>
+          <div class="mode-card">
+            <h4>Claude Code</h4>
+            <ul>
+              <li><b>Auto mode</b> is where recent versions start. A classifier model reviews risky actions and by default blocks things like <span class="nobr">curl | bash</span>, force push and production deploys.</li>
+              <li><b>Still yours:</b> deny and ask rules still apply, and the classifier doesn't see file or web contents. But auto mode "reduces permission prompts but does not guarantee safety". It is not a sandbox.</li>
+              <li><b>Manual mode</b> (<code>--permission-mode default</code>) asks before edits and commands. Shift+Tab switches modes.</li>
+              <li><b><code>--dangerously-skip-permissions</code></b> turns every check off. Only inside an isolated container or VM.</li>
+            </ul>
+            <p class="src"><a href="https://code.claude.com/docs/en/permission-modes" rel="noopener">Claude Code permission modes</a></p>
+          </div>
+        </div>
+        <div class="rule">
+          <b>In any tool</b>
+          <p>Never approve <code>curl … | sh</code> because a README told the agent to. In Claude Code, durable boundaries belong in <code>permissions.ask</code> / <code>deny</code> rules, not in chat.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -265,7 +293,7 @@ brew install --cask claude-code</pre><button class="copy" type="button">Copy</bu
           <input id="join-login" name="login" type="text" autocomplete="username" autocapitalize="none" maxlength="40" spellcheck="false" placeholder="your-login" required>
           <span class="join-ava" id="join-ava" hidden></span>
         </div>
-        <p class="hintline">Use the exact account you'll open the issue from. The issue author is what counts: the login you type here goes into the encrypted submission and must match it. It also highlights you on the leaderboard.</p>
+        <p class="hintline">Use the account you'll open the issue from. The issue author must match this login.</p>
         <span class="lbl-like" id="join-team-lbl">Team</span>
         <div class="team-chips" role="radiogroup" aria-labelledby="join-team-lbl" data-chips="join"></div>
         <p class="feedback" id="join-fb" aria-live="polite"></p>

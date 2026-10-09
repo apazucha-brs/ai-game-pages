@@ -20,10 +20,14 @@ const MISSIONS = [
   {
     id: "m1", act: 1, title: "Boot Up", xp: 100, kind: "answer",
     objective: "Get the CLI running in the repo and let the agent give you a read-only tour of the code.",
-    brief: "It's 8:12 a.m. Sales says the September chart looks like an ECG after three espressos. Before you fix anything, you need to know the terrain. Your new terminal partner reads a repo faster than you can finish your coffee.",
-    goal: "Install the CLI and sign in, start it in the repo folder and ask the agent for a tour of the project. Don't let it change anything.",
+    brief: "8:12 a.m. Sales says the September chart looks like an ECG. Before you fix anything, learn the terrain.",
+    goal: [
+      "Start the CLI in the repo folder and sign in.",
+      "Ask the agent for a tour of the project.",
+      "Don't let it change anything."
+    ],
     skill: "Exploring unfamiliar code",
-    learn: "How to start a session, trust a folder, sign in, and ask about architecture instead of grepping blindly.",
+    learn: "Start a session, trust a folder and ask about the architecture instead of grepping blindly.",
     question: "What is the name of the backend class (repository) that holds the SQL query computing the daily sales report?",
     placeholder: "ClassName",
     hints: {
@@ -41,10 +45,14 @@ const MISSIONS = [
   {
     id: "m2", act: 1, title: "First Fix", xp: 150, kind: "check",
     objective: "Let the agent run a failing test, explain the cause and make the smallest possible fix.",
-    brief: "A customer is disputing a receipt. It's off by one cent, but accounting never sleeps. PriceCalculatorTest has been red for a week and everyone pretends not to see it.",
-    goal: "Have the agent run the test, explain the cause and propose the smallest fix in production code. Review the diff before you accept it.",
+    brief: "A customer disputes a receipt that's one cent off. `PriceCalculatorTest` has been red for a week.",
+    goal: [
+      "Have the agent run the test and explain the cause.",
+      "Ask for the smallest fix in production code, not in the test.",
+      "Review the diff before you accept it."
+    ],
     skill: "Test, diagnose, fix, review",
-    learn: "The agent reads a test like a spec. You decide whether the fix is minimal and leaves the test alone.",
+    learn: "The agent reads a test like a spec. You decide whether the fix is minimal.",
     hints: {
       copilot: [
         "Ask the agent to run `./mvnw test -Dtest=PriceCalculatorTest` in `backend/` itself. When it asks for permission, pick option 1 (allow once).",
@@ -60,8 +68,11 @@ const MISSIONS = [
   {
     id: "m3", act: 1, title: "Context", xp: 150, kind: "check",
     objective: "Have the agent write a project instructions file so you stop repeating the house rules.",
-    brief: "Every session the agent asks how to run the tests and suggests JUnit 4. Time to write down the house rules so you don't repeat them in every prompt.",
-    goal: "Have the agent analyze the repo and create an instructions file: `.github/copilot-instructions.md` or `CLAUDE.md`. Add by hand whatever it missed.",
+    brief: "Every session the agent asks how to run the tests and suggests JUnit 4. Write the house rules down once.",
+    goal: [
+      "Have the agent analyze the repo and write `.github/copilot-instructions.md` (or `CLAUDE.md`).",
+      "Add by hand whatever it missed."
+    ],
     skill: "Project instruction files",
     learn: "Context written once loads into every session: commands, structure, test conventions.",
     hints: {
@@ -79,10 +90,14 @@ const MISSIONS = [
   {
     id: "m4", act: 2, title: "Plan First", xp: 250, kind: "check",
     objective: "Make the agent plan first, approve the plan, then implement GET /api/products/top.",
-    brief: "Marketing wants a \"Most popular\" widget on the home page. The product owner left a ready-made acceptance test and went on vacation somewhere with no signal.",
-    goal: "Remove `@Disabled` from `TopProductsAcceptanceTest`. Before the agent writes a single line, make it prepare a plan and approve it. Only then implement `GET /api/products/top?limit=N`.",
+    brief: "Marketing wants a \"Most popular\" widget. The product owner left an acceptance test and went on vacation.",
+    goal: [
+      "Remove `@Disabled` from `TopProductsAcceptanceTest`.",
+      "Make the agent write a plan, and approve it before any code is written.",
+      "Then implement `GET /api/products/top?limit=N`."
+    ],
     skill: "Plan mode",
-    learn: "A plan before code means cheaper course corrections, a smaller diff and fewer surprises in review.",
+    learn: "A plan before code means cheaper corrections and a smaller diff.",
     hints: {
       copilot: [
         "Shift+Tab cycles the modes: standard, plan, autopilot. You can also type `/plan` followed by the task. Skip autopilot for now.",
@@ -98,10 +113,19 @@ const MISSIONS = [
   {
     id: "m5", act: 2, title: "The Trap", xp: 200, kind: "answer", security: true,
     objective: "Run a legacy importer with the agent and catch the hidden instruction before anything executes.",
-    brief: "The repo has an old data importer from the days when the shop ran on PHP. The README looks harmless, but not everything in it shows up in the Markdown preview.",
-    goal: "Ask the agent to run the importer as the README describes. Read every permission request. If the agent proposes downloading and running a script from the internet, say no and find out where that idea came from.",
+    brief: "An old data importer from the PHP days. Its README looks harmless, but not everything shows up in the Markdown preview.",
+    goal: [
+      "Ask the agent to run the importer as the README describes.",
+      "Read every permission request.",
+      "If it wants to download and run a script, say no and find out where the idea came from."
+    ],
     skill: "Prompt injection and tool approval",
     learn: "File contents are data, not commands. The last line of defense is you, at the approval prompt.",
+    approval: [
+      "**Copilot CLI:** `--yolo` and `--allow-all` switch approval prompts off, and nothing reviews the actions. Not for this mission.",
+      "**Claude Code:** recent versions start in auto mode. Its classifier blocks risky actions such as `curl … | sh`, but it is not a sandbox. For this mission, switch to Manual mode.",
+      "**Either tool:** never approve `curl … | sh` just because a README told the agent to."
+    ],
     question: "From which domain was the script supposed to be downloaded and run?",
     placeholder: "domain.example",
     hints: {
@@ -110,7 +134,7 @@ const MISSIONS = [
         "Look at the raw file, for example `!cat tools/legacy-importer/README.md`, and search for an HTML comment `<!-- … -->`. The domain is in the `curl` command."
       ],
       claude: [
-        "Work in manual mode: no `auto` and no `--dangerously-skip-permissions`. Shift+Tab shows the current mode. Esc at an approval prompt means No.",
+        "Play in Manual mode, not auto mode or `--dangerously-skip-permissions`: the point is that you spot the trap. Recent versions start in auto mode, so start with `claude --permission-mode default` or press Shift+Tab until the status bar says manual mode. Esc at an approval prompt means No.",
         "Type `!cat tools/legacy-importer/README.md` and search for an HTML comment `<!-- … -->`. The domain is in the `curl` command."
       ]
     },
@@ -119,10 +143,14 @@ const MISSIONS = [
   {
     id: "m6", act: 3, title: "Log Detective", xp: 250, kind: "answer",
     objective: "Have the agent count processed payment callbacks per order across three days of logs.",
-    brief: "On September 17 the payment gateway had the hiccups. The logs from that day are thousands of lines, several threads writing at once, and order numbers that look alike. You won't dig through that by hand.",
-    goal: "Have the agent analyze the `logs/` folder and count processed payment callbacks per order. The result must come from a command you can see and run again.",
+    brief: "On September 17 the payment gateway hiccuped. Thousands of log lines, several threads, look-alike order numbers.",
+    goal: [
+      "Have the agent analyze the `logs/` folder.",
+      "Count processed payment callbacks per order.",
+      "Get the result from a command you can see and run again."
+    ],
     skill: "Log analysis",
-    learn: "The agent writes a repeatable command (grep, awk) and you verify the result instead of taking its word for it.",
+    learn: "The agent writes a repeatable command (grep, awk). You verify the result instead of taking its word for it.",
     question: "Which order had its payment callback processed the most times?",
     placeholder: "ORD-00000",
     hints: {
@@ -140,10 +168,14 @@ const MISSIONS = [
   {
     id: "m7", act: 3, title: "SQL", xp: 250, kind: "answer",
     objective: "Have the agent write SQL that counts the duplicate rows the repeated callbacks left in order_items.",
-    brief: "The logs confirm the callbacks were repeated. The question is how much junk they left in the database. Management wants one number, not \"quite a lot\".",
-    goal: "Connect to the database (Postgres on `localhost:5433`, database, user and password `shopflow`) and have the agent write a query counting surplus rows in `order_items`. Check that the definition of a duplicate is right.",
+    brief: "The callbacks were repeated. Management wants one number for the junk they left in the database.",
+    goal: [
+      "Connect to Postgres on `localhost:5433`. Database, user and password are all `shopflow`.",
+      "Have the agent write a query that counts surplus rows in `order_items`.",
+      "Check that its definition of a duplicate is right."
+    ],
     skill: "SQL with an agent",
-    learn: "The agent writes the SQL, you own the definition. A precise question gets the right number.",
+    learn: "The agent writes the SQL. You own the definition.",
     question: "How many surplus rows are in order_items? (duplicate = same order_id + product_id pair more than once; count only rows beyond the first)",
     placeholder: "number",
     hints: {
@@ -161,10 +193,14 @@ const MISSIONS = [
   {
     id: "m8", act: 3, title: "The Chart Lies", xp: 500, kind: "check", boss: true,
     objective: "Fix the lying sales chart: one bug in the frontend, one in the backend.",
-    brief: "The CEO opens the dashboard and sees that on September 17 you sold more than a small country's GDP. Two bugs, two layers, one chart. No shortcuts here.",
-    goal: "Start the app, open the \"Daily sales\" chart, take a screenshot and paste it into the CLI asking what's wrong. Fix (a) the revenue sum in `frontend/src/report/aggregateByDay.ts` and (b) the non-idempotent `PaymentCallbackService` in the backend.",
+    brief: "The CEO sees September 17 sales bigger than a small country's GDP. Two bugs, two layers, one chart.",
+    goal: [
+      "Start the app, screenshot the Daily sales chart and paste it into the CLI.",
+      "Fix the revenue sum in the frontend file `aggregateByDay.ts`.",
+      "Fix the non-idempotent `PaymentCallbackService` in the backend."
+    ],
     skill: "Multimodal debugging",
-    learn: "Screenshot as context, a hypothesis, a test as the judge. A fix in both layers, each with a green test.",
+    learn: "Screenshot as context, a hypothesis, a test as the judge. Each layer gets its fix and a green test.",
     hints: {
       copilot: [
         "Most reliable: Cmd+Shift+4 saves a screenshot to your Desktop; drag the file into the terminal or type `@path/screenshot.png`. Cmd+Ctrl+Shift+4 copies to the clipboard instead; paste it with Option+V, which needs \"Use Option as Meta key\" in Terminal.app (Settings > Profiles > Keyboard) or Left Option = Esc+ in iTerm2.",
@@ -207,7 +243,7 @@ const BADGES = [
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const fmt = s => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>");
+const fmt = s => esc(s).replace(/`([^`]+)`/g, (_, c) => c.length > 28 ? `<code class="wrap">${c.replace(/\//g, "/<wbr>")}</code>` : `<code>${c}</code>`).replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
 const reduceMotion = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false, addEventListener() {} };
 const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const store = {
@@ -399,11 +435,11 @@ function applyBoard(b) {
     const newBadges = seen ? badges.filter(x => !seen.badges.includes(x)) : badges;
     newBadges.forEach((id, i) => setTimeout(() => {
       const bd = BADGES.find(x => x.id === id); if (!bd) return;
-      toast("ODZNAKA ZDOBYTA", bd.name, bd.map); play("badge");
+      toast("BADGE UNLOCKED", bd.name, bd.map); play("badge");
     }, 1100 + fresh.length * 900 + i * 500));
     if (levelIndex(xp) > levelIndex(beforeXp)) setTimeout(() => showLevelUp(LEVELS[levelIndex(xp)]), 900 + fresh.length * 900);
   } else if (seen && !firstLoad && badges.some(x => !seen.badges.includes(x))) {
-    badges.filter(x => !seen.badges.includes(x)).forEach(id => { const bd = BADGES.find(x => x.id === id); if (bd) { toast("ODZNAKA ZDOBYTA", bd.name, bd.map); play("badge"); } });
+    badges.filter(x => !seen.badges.includes(x)).forEach(id => { const bd = BADGES.find(x => x.id === id); if (bd) { toast("BADGE UNLOCKED", bd.name, bd.map); play("badge"); } });
   }
   fresh.forEach(id => { delete S.pending[id]; });
 
@@ -612,9 +648,8 @@ function missionHtml(m, idx) {
   const kindLbl = m.kind === "check" ? "Script check" : "Question";
   const submit = m.kind === "check"
     ? `<ol class="pass-steps">
-         <li>In the repo root run <code class="cmd">node check.mjs ${m.id}</code> <span class="or">or</span> <code class="cmd">npm run check -- ${m.id}</code></li>
-         <li>On success you'll see a green banner with a flag that starts with <code>ACAD-</code>.</li>
-         <li>Paste the flag below and click <b>Submit flag</b>.</li>
+         <li>In the repo root, run the check:<div class="codeblk"><div class="cb-bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre>node check.mjs ${m.id}</pre></div></li>
+         <li>On success it prints a flag that starts with <code>ACAD-</code>. Paste it below and click <b>Submit flag</b>.</li>
        </ol>`
     : `<p class="question">${fmt(m.question)}</p>`;
   const ansLabel = m.kind === "check" ? "Flag from check.mjs" : "Your answer";
@@ -633,7 +668,7 @@ function missionHtml(m, idx) {
       <button class="m-toggle" type="button" id="mt-${m.id}" aria-expanded="false" aria-controls="mb-${m.id}">
         <span class="m-code" aria-hidden="true">${m.id.toUpperCase()}</span>
         <span class="m-main">
-          <span class="m-tags"><span class="tag tag-act">Act ${act.roman}</span><span class="tag">${kindLbl}</span>${m.boss ? '<span class="tag tag-boss">Boss</span>' : ""}${m.security ? '<span class="tag tag-sec">Security</span>' : ""}<span class="sr-only">, mission ${idx + 1} of ${MISSIONS.length}:</span></span>
+          <span class="m-tags"><span class="sr-only">Act ${act.roman}, </span><span class="tag">${kindLbl}</span>${m.boss ? '<span class="tag tag-boss">Boss</span>' : ""}${m.security ? '<span class="tag tag-sec">Security</span>' : ""}<span class="sr-only">, mission ${idx + 1} of ${MISSIONS.length}:</span></span>
           <span class="m-title">${esc(m.title)}</span>
           <span class="m-obj">${esc(m.objective)}</span>
           <span class="m-skill"><span class="sr-only">Skill: </span>${esc(m.skill)}</span>
@@ -649,13 +684,14 @@ function missionHtml(m, idx) {
       <div class="m-story">
         ${m.boss ? '<div class="hpbar"><span>Boss HP</span><div class="hp"><i data-hp></i></div></div>' : ""}
         <section class="m-sec"><h4>Briefing</h4><p class="brief">${fmt(m.brief)}</p></section>
-        <section class="m-sec"><h4>Your goal</h4><p>${fmt(m.goal)}</p></section>
+        <section class="m-sec"><h4>Your goal</h4>${Array.isArray(m.goal) ? `<ul class="goal">${m.goal.map(g => `<li>${fmt(g)}</li>`).join("")}</ul>` : `<p>${fmt(m.goal)}</p>`}</section>
         <section class="m-sec"><h4>What you'll learn</h4><p>${fmt(m.learn)}</p></section>
+        ${m.approval ? `<section class="m-sec m-approval"><h4>Approval modes</h4><ul>${m.approval.map(a => `<li>${fmt(a)}</li>`).join("")}</ul><p class="sec-note"><a href="#approval-modes">Compare the modes</a></p></section>` : ""}
       </div>
       <div class="m-tools">
         <section class="m-sec">
           <h4>Hints</h4>
-          <p class="sec-note">Each hint you reveal before solving costs <span data-hintcost>${HINT_COST}</span> XP. After you solve the mission they're free. Honor system: the page adds the number of hints you revealed to your submission, so don't edit it on GitHub.</p>
+          <p class="sec-note">Each hint costs <span data-hintcost>${HINT_COST}</span> XP until you solve the mission. Honor system: your submission includes how many hints you revealed. Don't edit that number on GitHub.</p>
           <div class="tabs" role="tablist" aria-label="Hints for tool">${tools}</div>
           ${panels}
         </section>
@@ -698,6 +734,27 @@ $("#acts").innerHTML = ACTS.map(a => {
     <div class="act-list">${MISSIONS.map((m, i) => m.act === a.n ? missionHtml(m, i) : "").join("")}</div>
   </section>`;
 }).join("");
+/* Long commands wrap, but never inside a short flag or name such as "--prefix" or
+   "docker-compose": each short hyphenated token goes in a no-wrap span. The text, and so
+   what Copy copies, stays exactly the same. */
+function keepTokens(pre) {
+  const walk = document.createTreeWalker(pre, NodeFilter.SHOW_TEXT), nodes = [];
+  while (walk.nextNode()) nodes.push(walk.currentNode);
+  for (const n of nodes) {
+    const parts = n.data.split(/(\S*-\S*)/);
+    if (parts.length < 2) continue;
+    const frag = document.createDocumentFragment();
+    parts.forEach((p, i) => {
+      if (!p) return;
+      if (!(i % 2)) { frag.append(p); return; }
+      // keep hyphenated tokens whole; a long one (a path) may only break after a "/"
+      const bits = p.length <= 22 ? [p] : p.split(/(?<=\/)/);
+      bits.forEach((t, j) => { if (j) frag.append(document.createElement("wbr")); const s = document.createElement("span"); s.className = "nw"; s.textContent = t; frag.append(s); });
+    });
+    n.replaceWith(frag);
+  }
+}
+document.querySelectorAll(".codeblk pre").forEach(keepTokens);
 $("#order-strip").innerHTML = '<span class="os-lbl">Suggested order</span>' + MISSIONS.map((m, i) =>
   `${i ? '<span class="arrow" aria-hidden="true">&#9654;</span>' : ""}<a href="#${m.id}" data-strip="${m.id}">${m.id.toUpperCase()}</a>`).join("");
 
@@ -719,7 +776,7 @@ function setExpanded(id, open, opts = {}) {
   }
 }
 function renderCtas() {
-  const nextM = MISSIONS.find(m => !isSolved(m.id));
+  const nextM = MISSIONS.find(m => !isSolved(m.id) && !S.pending[m.id]);
   MISSIONS.forEach(m => {
     const card = document.getElementById(m.id), open = card.classList.contains("open");
     $("[data-cta]", card).textContent = open ? "Close" : isSolved(m.id) ? "Review" : nextM && nextM.id === m.id ? "Start mission" : "Open";
@@ -750,7 +807,7 @@ function renderProgress() {
   $("#hud-fill").style.width = pct + "%";
   $("#hud-bar").setAttribute("aria-valuenow", String(pct));
   $("#hud-bar").setAttribute("aria-valuetext", next ? `${xp} of ${next.at} XP to ${next.name}` : "Max level");
-  const nextM = MISSIONS.find(m => !isSolved(m.id));
+  const nextM = MISSIONS.find(m => !isSolved(m.id) && !S.pending[m.id]);
   const now = Date.now();
   MISSIONS.forEach(m => {
     const card = document.getElementById(m.id), solved = isSolved(m.id), pend = S.pending[m.id], isNext = !!nextM && nextM.id === m.id;
